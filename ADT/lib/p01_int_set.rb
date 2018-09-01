@@ -70,8 +70,9 @@ class ResizingIntSet
   end
 
   def insert(num)
-    debugger
-    resize! if @store.count == num_buckets
+    if num_buckets <= @count
+      resize!
+    end
 
    unless self.include?(num)
       bucket_num = num % @store.length
@@ -103,12 +104,7 @@ class ResizingIntSet
   end
 
   def resize!
-    # puts "STORE IS #{@store}"
-    number = num_buckets
-    resized_arr = (Array.new(number) { Array.new })
-    @store << resized_arr
-
-
-    # puts "STORE IS #{@store}"
+    new_arrays = Array.new(num_buckets) {Array.new}
+    @store.concat(new_arrays)
   end
 end

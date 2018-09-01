@@ -13,13 +13,17 @@ class Node
   end
 
   def remove
-    # optional but useful, connects previous link to next link
-    # and removes self from list.
+    @next = nil
+    @prev = nil
   end
 end
 
 class LinkedList
+  attr_accessor :head , :tail
+
   def initialize
+    @head = Node.new
+    @tail = Node.new
   end
 
   def [](i)
@@ -28,21 +32,31 @@ class LinkedList
   end
 
   def first
+    self.head
   end
 
   def last
+    self.tail
   end
 
   def empty?
+    self.head.next.nil?
   end
 
   def get(key)
+    self
   end
 
   def include?(key)
+    each_with_index {|link,j| link.val.include?(key)}
   end
 
   def append(key, val)
+    new_node = Node.new(key,val)
+    @head.next = new_node
+    @tail.prev = new_node
+    new_node.prev = @head
+    new_node.next = @tail
   end
 
   def update(key, val)
